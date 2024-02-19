@@ -23,10 +23,12 @@ Zip Code: 33611
 
 ### Sidebar
 st.sidebar.title("Inputs")
+#Hi {lead_first_name}, Buzz from the Bazaar here. We have limited stock of {product} available at {price} per {unit}. Interested?
 st.sidebar.write('modify these then press Start/Restart on the right')
-lead_name = st.sidebar.text_input("Lead First Name", value = "Susan")
-loc = st.sidebar.text_input("Location", value = "Tampa, FL")
-pd = st.sidebar.text_area("Project Description", value = default_project_value, height = 300)
+lead_first_name = st.sidebar.text_input("Lead First Name", value = "Susan")
+product = st.sidebar.text_input("Product", value = "fidget spinners")
+price = st.sidebar.text_input("Price", value = "$10.00")
+unit = st.sidebar.text_input("Unit", value = "dozen")
 temp = 0#st.sidebar.slider("Temperature", min_value = 0.0, max_value = 1.0, value = 0.0, step = 0.1)
 model = "gpt-4-1106-preview"#st.sidebar.selectbox("Model", ["gpt-4-1106-preview", "gpt-3.5-turbo"])
 max_tokens = 200#st.sidebar.slider("Max Tokens", min_value = 50, max_value = 500, value = 200, step = 50)
@@ -35,15 +37,16 @@ max_tokens = 200#st.sidebar.slider("Max Tokens", min_value = 50, max_value = 500
 
 client = OpenAI()
 
-st.title("AI Thomas Chatbot")
+st.title("AI Bazaar Chatbot")
 
 if st.button("Start/Restart"):
     #clear all session state
     st.session_state.clear()
     st.session_state.messages = []
-    st.session_state.lead_name = lead_name
-    st.session_state.loc = loc
-    st.session_state.pd = pd
+    st.session_state.lead_first_name = lead_first_name
+    st.session_state.product = product
+    st.session_state.price = price
+    st.session_state.unit = unit
     st.session_state.temp = temp
     st.session_state.model = model
     st.session_state.max_tokens = max_tokens
@@ -62,7 +65,7 @@ if "messages" in st.session_state:
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
 
-    if prompt := st.chat_input("What is up?"):
+    if prompt := st.chat_input("Type response here"):
         st.session_state.messages.append({"role": "user", "content": prompt})
         with st.chat_message("user"):
             st.markdown(prompt)
@@ -70,25 +73,6 @@ if "messages" in st.session_state:
         with st.chat_message("assistant"):
             generate_responses(st.session_state)
             
-        #     messages=[
-        #             {"role": m["role"], "content": m["content"]}
-        #             for m in st.session_state.messages
-        #         ]
-        #     messages.insert(0, {"role": "system", "content": st.session_state["system_prompt"]})
-
-        #     stream = client.chat.completions.create(
-        #         model=st.session_state["openai_model"],
-        #         messages = messages,
-        #         temperature = 0,
-
-        #     )
-
-        #     response = st.write_stream(stream)
-        # st.session_state.messages.append({"role": "assistant", "content": response})
-
-
-
-
 
 
 

@@ -7,16 +7,18 @@ def initialize_prompt_and_text(session_state):
     key: str = os.environ.get("SUPABASE_KEY")
 
     supabase: Client = create_client(url, key)
-    data, count = supabase.table("bots_dev").select("*").eq("id", "mike").execute()
+    data, count = supabase.table("bots_dev").select("*").eq("id", "buzz").execute()
     bot_info = data[1][0]
 
     system_prompt = bot_info['system_prompt']
     initial_text = bot_info['initial_text']
     to_format = {
-        'lead_name': session_state.lead_name,
-        'project_description': session_state.pd,
-        'address': session_state.loc,
-        'booking_link': 'https://calendly.com/d/y7c-t9v-tnj/15-minute-meeting-with-improovy-painting-expert '
+        'lead_first_name': session_state.lead_first_name,
+        'agent_name': "Buzz",
+        'product': session_state.product,
+        'price': session_state.price,
+        'unit': session_state.unit,
+        'booking_link': 'bookinglink.com'
     }
     initial_text = initial_text.format(**to_format)
     system_prompt = system_prompt.format(**to_format)

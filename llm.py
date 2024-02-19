@@ -9,7 +9,7 @@ openai = OpenAI(max_retries = 5)
 
 
 
-def generate_streaming_response(self, messages, model = 'gpt-4-1106-preview', max_tokens=200):
+def generate_streaming_response(self, messages, model = 'gpt-4-1106-preview', max_tokens=250):
     try:
         response = openai.chat.completions.create(model=model, messages=messages, max_tokens=max_tokens, stream=True)
         big_chunk = ""
@@ -69,7 +69,7 @@ def generate_responses(session_state):
 
   key = os.environ.get("OPENAI_API_KEY")
   openai.api_key = key
-
+  ic(messages)
   response = openai.chat.completions.create(model=session_state.model, messages=[system_prompt , *messages], max_tokens=session_state.max_tokens, temperature = session_state.temp)
   response = response.choices[0].message.content
   split_response = split_sms(response)
