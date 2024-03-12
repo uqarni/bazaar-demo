@@ -19,6 +19,7 @@ def initialize_prompt_and_text(session_state):
         'price': session_state.price,
         'unit': session_state.unit,
         'booking_link': 'bookinglink.com'
+        'business_type': session_state.business_type
     }
     initial_text = initial_text.format(**to_format)
     system_prompt = system_prompt.format(**to_format)
