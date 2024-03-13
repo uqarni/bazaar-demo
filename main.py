@@ -25,11 +25,10 @@ Zip Code: 33611
 st.sidebar.title("Inputs")
 #Hi {lead_first_name}, Buzz from the Bazaar here. We have limited stock of {product} available at {price} per {unit}. Interested?
 st.sidebar.write('modify these then press Start/Restart on the right')
+agent_name = st.sidebar.text_input("Agent Name", value = "Benny")
 lead_first_name = st.sidebar.text_input("Lead First Name", value = "Susan")
-product = st.sidebar.text_input("Product", value = "fidget spinners")
-price = st.sidebar.text_input("Price", value = "$10.00")
-unit = st.sidebar.text_input("Unit", value = "dozen")
 business_type = st.sidebar.selectbox("Business Type", ['Retail','Wholesale/Distributor','Ecommerce','Other'], index = 0)
+booking_link = st.sidebar.text_input("Booking Link", value = "calendly.com/bazaar-call")
 temp = 0#st.sidebar.slider("Temperature", min_value = 0.0, max_value = 1.0, value = 0.0, step = 0.1)
 model = "gpt-4-1106-preview"#st.sidebar.selectbox("Model", ["gpt-4-1106-preview", "gpt-3.5-turbo"])
 max_tokens = 200#st.sidebar.slider("Max Tokens", min_value = 50, max_value = 500, value = 200, step = 50)
@@ -44,11 +43,10 @@ if st.button("Start/Restart"):
     #clear all session state
     st.session_state.clear()
     st.session_state.messages = []
+    st.session_state.agent_name = agent_name
     st.session_state.lead_first_name = lead_first_name
-    st.session_state.product = product
-    st.session_state.price = price
-    st.session_state.unit = unit
     st.session_state.business_type = business_type
+    st.session_state.booking_link = booking_link
     st.session_state.temp = temp
     st.session_state.model = model
     st.session_state.max_tokens = max_tokens
